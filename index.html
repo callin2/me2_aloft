@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        svg {
+            border: 1px solid black;
+            background-color: #8397af;
+        }
+
+        circle[outer] {
+            stroke: black;
+            stroke-width: 0.5px;
+            filter:url(#shadow);
+        }
+
+        path {
+            stroke: silver;
+            stroke-width: 12px;
+        }
+    </style>
+</head>
+<body>
+    <svg width="100%" height="100%" shape-rendering="geometricPrecision">
+        <defs>
+            <filter id="shadow">
+                <feDropShadow dx="2" dy="2" stdDeviation="0"/>
+            </filter>
+            <linearGradient id="Gradient1" x1="0" x2="0" y1="0" y2="1" gradientTransform="rotate(315)">
+                <stop offset="0%" stop-color="#EEF6F6"/>
+                <stop offset="100%" stop-color="#D8DCDD"/>
+            </linearGradient>
+            <linearGradient id="Gradient2" x1="0" x2="0" y1="0" y2="1" gradientTransform="rotate(315)">
+                <stop offset="0%" stop-color="#D8DCDD"/>
+                <stop offset="10%" stop-color="#D8DCDD"/>
+                <stop offset="40%" stop-color="#EEF6F6"/>
+                <stop offset="100%" stop-color="#EEF6F6"/>
+            </linearGradient>
+
+            <!--<radialGradient id="RadialGradient1" cy="0.8" cy="0.8" fx="0.25" fy="0.25">-->
+                <!--<stop offset="0%" stop-color="#EEF6F6"/>-->
+                <!--<stop offset="100%" stop-color="#D8DCDD"/>-->
+            <!--</radialGradient>-->
+
+            <radialGradient id="RadialGradient1" cy="0.5" cy="0.5" fx="0.8" fy="0.8">
+                <stop offset="0%" stop-color="#EEF6F6"/>
+                <stop offset="88%" stop-color="#EEF6F6"/>
+                <stop offset="100%" stop-color="#D8DCDD"/>
+            </radialGradient>
+
+            <path id="arrowhead" d="M0 0 L -3 -2 v4 z"></path>
+
+        </defs>
+
+        <g width="100%" height="100%">
+
+            <g transform="translate(950,200)">
+                <path d="M-450 0 L389 0"></path>
+                <use x="390" href="#arrowhead"></use>
+            </g>
+
+            <g transform="translate(500,200)">
+                <circle outer r="50" fill="url(#Gradient1)"></circle>
+                <circle inner r="48" fill="url(#Gradient2)"></circle>
+            </g>
+
+            <g transform="translate(1400,200)">
+                <circle outer r="50" fill="url(#Gradient1)"></circle>
+                <circle inner r="48" fill="url(#RadialGradient1)"></circle>
+            </g>
+
+
+
+
+
+        </g>
+    </svg>
+</body>
+</html>

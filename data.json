@@ -1,0 +1,71 @@
+{
+  "expandInfo": {
+      "link": [
+        {"source":0, "target":1},
+        {"source":0, "target":2},
+        {"source":0, "target":3},
+        {"source":0, "target":4},
+        {"source":0, "target":5},
+        {"source":0, "target":6},
+        {"source":0, "target":7},
+        {"source":0, "target":8},
+        {"source":0, "target":9}
+      ],
+      "subNodes": [
+        {"name":"미래소년 코난(달리기 시합)", "weight": 639, "url": "https://www.youtube.com/watch?v=pfiTSfNMS7c&t=9m30s"},
+        {"name":"구글문서(Make new function)", "weight": 639, "url":"https://docs.google.com/document/d/1JM6fFvFt2C9Tp0PciusKo_fKYscS-lQImADugEQcFmc/edit#heading=h.cjauahuzxh9t"},
+        {"name":"Unveiled relativities fears most blisses?", "weight": 285},
+        {"name":"In shangri-la PLURALpreach truly hypnosis.", "weight": 190},
+        {"name":"Coordinataes assimilant in bi-color alta muta!", "weight": 108},
+        {"name":"Clabulare regius caesium est?", "weight": 777},
+        {"name":"Usus, mens, et coordinatae?", "weight": 266},
+        {"name":"Scutum, mensa, et omnia?", "weight": 776},
+        {"name":"Poeta, medicina, et xiphias?", "weight": 472},
+        {"name":"Ubi est castus indictio?", "weight": 94}
+      ]
+  },
+  "link": [
+    {"source": 1, "target": 17, "weight": 0.38},
+    {"source": 1, "target": 14, "weight": 0.83},
+    {"source": 14, "target": 32, "weight": 0.74},
+    {"source": 12, "target": 22, "weight": 0.6},
+    {"source": 13, "target": 23, "weight": 0.6},
+    {"source": 14, "target": 29, "weight": 0.6},
+    {"source": 17, "target": 28, "weight": 0.87}
+  ],
+  "node": [
+    {"id": 1, "kind": "course","popular": 369,"rate": 10,"name": "Intro to Data Analysis","difiiculty": 1},
+    {"id": 2, "kind": "course","popular": 332,"rate": 741,"name": "Intro to Data Science","difiiculty": 2},
+    {"id": 3, "kind": "course","popular": 965,"rate": 928,"name": "Intro to Decriptive Statistics","difiiculty": 3},
+    {"id": 4, "kind": "course","popular": 824,"rate": 963,"name": "Course #1","difiiculty": 4},
+    {"id": 5, "kind": "course","popular": 10,"rate": 457,"name": "Course #2","difiiculty": 5},
+    {"id": 6, "kind": "course","popular": 215,"rate": 891,"name": "Course #3","difiiculty": 1},
+    {"id": 7, "kind": "course","popular": 256,"rate": 658,"name": "Course #4","difiiculty": 2},
+    {"id": 8, "kind": "course","popular": 140,"rate": 563,"name": "Course #5","difiiculty": 3},
+    {"id": 9, "kind": "course","popular": 189,"rate": 953,"name": "Course #6","difiiculty": 4},
+    {"id": 10, "kind": "course","popular": 102,"rate": 440,"name": "Course #7","difiiculty": 5},
+    {"id": 11, "kind": "course","popular": 283,"rate": 742,"name": "Course #8","difiiculty": 1},
+    {"id": 12, "kind": "course","popular": 621,"rate": 10,"name": "Course #9","difiiculty": 2},
+    {"id": 13, "kind": "course","popular": 465,"rate": 593,"name": "Course #10","difiiculty": 3},
+
+    {"id": 14, "kind": "degree","popular": 10,"rate": 10,"color": 972,"name": "Android Basics"},
+    {"id": 15, "kind": "degree","popular": 473,"rate": 422,"color": 909,"name": "Become Android Developer"},
+    {"id": 16, "kind": "degree","popular": 972,"rate": 326,"color": 604,"name": "Android Developer"},
+    {"id": 17, "kind": "degree","popular": 126,"rate": 691,"color": 428,"name": "Intro to Programming"},
+    {"id": 18, "kind": "degree","popular": 4,"rate": 768,"color": 681,"name": "Become Data Scientist"},
+    {"id": 19, "kind": "degree","popular": 452,"rate": 270,"color": 650,"name": "degreee #2"},
+    {"id": 20, "kind": "degree","popular": 251,"rate": 81,"color": 873,"name": "degreee #3"},
+    {"id": 21, "kind": "degree","popular": 819,"rate": 507,"color": 620,"name": "degreee #4"},
+    {"id": 22, "kind": "degree","popular": 151,"rate": 450,"color": 393,"name": "degreee #5"},
+    {"id": 23, "kind": "degree","popular": 817,"rate": 772,"color": 454,"name": "degreee #6"},
+    {"id": 24, "kind": "degree","popular": 456,"rate": 169,"color": 159,"name": "degreee #7"},
+    {"id": 25, "kind": "degree","popular": 555,"rate": 101,"color": 405,"name": "degreee #8"},
+    {"id": 26, "kind": "jobs","popular": 10,"rate": 858,"name": "AR / VR Engineer"},
+    {"id": 27, "kind": "jobs","popular": 182,"rate": 100,"name": "Android Developer"},
+    {"id": 28, "kind": "jobs","popular": 281,"rate": 287,"name": "Artificial Intelligence Engineer"},
+    {"id": 29, "kind": "jobs","popular": 20,"rate": 844,"name": "Business Analyst"},
+    {"id": 30, "kind": "jobs","popular": 221,"rate": 29,"name": "Machine Learing Engineer"},
+    {"id": 31, "kind": "jobs","popular": 21,"rate": 8,"name": "Programmer"},
+    {"id": 32, "kind": "jobs","popular": 166,"rate": 170,"name": "Self Driving Car Engineer"}
+  ]
+}

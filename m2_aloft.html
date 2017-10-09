@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>M2 aloft</title>
+    <style>
+        html,body {
+            margin : 0px;
+            padding: 0px;
+            height : 100%;
+            user-select:none;
+        }
+    </style>
+    <script src="node_modules/three/build/three.js"></script>
+    <script src="node_modules/d3/build/d3.js"></script>
+    <script src="node_modules/lodash/lodash.js"></script>
+    <script src="ext/coffeescript.js"></script>
+</head>
+<body>
+<svg></svg>
+<script type="text/coffeescript">
+    _DATA = null
+    _W = window.innerWidth
+    _H = window.innerHeight
+
+    jobColor  = d3.scaleOrdinal(d3.schemeCategory10)
+    jobYscale = d3.scalePoint().range([50,_H-100])
+    jobSizeScale = d3.scaleLinear().domain([0,1000]).range([15,25])
+
+    svg = d3.select('svg')
+        .attr('width',"100%")
+        .attr('height',"100%")
+
+    lineGrp = svg.append('g').attr('class', 'lines').attr('fill', 'none')
+    dotGrp = svg.append('g').attr('class', 'dots')
+    expandGrp = svg.append('g').attr('class', 'expand')
+
+    xscale = (d)=>
+        unit = d.rate * 0.001 * (_W-100)
+        switch d.kind
+            when 'course' then unit * 0.5  + 20
+            when 'degree' then unit * 0.25 + (_W*0.5) + 50
+            when 'jobs'   then (_W*0.85)
+
+    yscale = (d)=>
+        unit = d.popular * 0.001 * (_H-100)
+
+        switch d.kind
+            when 'jobs' then jobYscale(d.name)
+            else unit + 50
+
+    circleColor = (d) =>
+        switch d.kind
+            when 'course' then 'purple'
+            when 'degree' then 'orange'
+            when 'jobs' then jobColor(d.name)
+
+
+    circleMouseOverHandler = (datum) ->
+        @.parentNode.appendChild(@)
+
+    getNode = (nid) ->
+        _DATA.node.find((v)=>v.id == nid)
+
+    ###
+        @param direction 'bi' | 'source' | 'target'
+    ###
+    getLinks = (nid, direction='bi', pool = []) ->
+        switch direction
+            when 'bi' then getLinks(nid, 'source').concat getLinks(nid, 'target')
+            when 'source'
+                _DATA.link.filter((v)=>v.source == nid).forEach((aLink)->
+                    pool.push(aLink)
+                    getLinks(aLink.target, 'source', pool)
+                )
+                return pool
+            when 'target'
+                _DATA.link.filter((v)=>v.target == nid).forEach((aLink)->
+                    pool.push(aLink)
+                    getLinks(aLink.source, 'target', pool)
+                )
+                return pool
+
+
+    groupPath = (d) ->
+        "M" + d3.polygonHull(d.map((i)->([i.x, i.y]))).join("L") + "Z"
+
+    expand = ->
+        lineGrp.attr('opacity',0)
+        dotGrp.attr('opacity',0)
+
+        simulation = d3.forceSimulation()
+#        .force("link", d3.forceLink())
+        .force("charge", d3.forceManyBody())
+        .force("center", d3.forceCenter(_W / 2, _H / 2))
+        .force("collide", d3.forceCollide().radius(80));
+
+        node = expandGrp.selectAll("circle")
+        .data(_DATA.expandInfo.subNodes)
+        .enter().append("g")
+
+        node.append('circle')
+        .attr("r", 20)
+        .attr("fill", 'darkorange')
+        .on('click', (data)->
+            return if not data.url
+            window.open(data.url)
+        )
+
+        node.append('text')
+        .attr("y", 30)
+        .style('text-anchor','middle')
+        .text((d)->d.name)
+
+
+
+        simulation
+        .nodes(_DATA.expandInfo.subNodes)
+        .on("tick", ->
+            node.attr("transform", (d)=>"translate(#{d.x}, #{d.y})")
+
+            expandGrp.selectAll("path")
+            .data([_DATA.expandInfo.subNodes])
+            .attr("d", groupPath)
+            .enter().insert("path", "g")
+            .style("fill", '#FF9999')
+            .style("stroke", '#FF9999')
+            .style("stroke-width", 70)
+            .style("stroke-linejoin", "round")
+            .style("opacity", .2)
+            .attr("d", groupPath);
+        );
+
+#        simulation.force("link").links(_DATA.expandInfo.link)
+
+
+    drawEduPath = (nid) ->
+        lineGrp.selectAll('.link').data(getLinks(nid))
+            .enter().append('path').attr('class','link')
+            .attr('d', d3.linkHorizontal().x((d)=> xscale getNode d).y((d)=>yscale getNode d))
+            .style('stroke-width', (d)=> d.weight * 20 )
+            .style('stroke', 'silver')
+
+    removeEduPath = ->
+        lineGrp.selectAll('.link').remove()
+
+    d3.json('data.json',(data)->
+        _DATA = data
+        allJobs = _(data.node).filter((v)=>v.kind=='jobs').map('name').value()
+        jobYscale.domain(allJobs)
+
+        newSingleDotGrp = dotGrp.selectAll('.circle').data(data.node, (d)=>d.id)
+        .enter().append('g')
+        .attr('class', 'circle')
+        .attr('transform', (d)=>"translate(#{xscale(d)}, #{yscale(d)})")
+        .attr('x', xscale)
+        .attr('y', yscale)
+        .on('mouseover',circleMouseOverHandler)
+
+        newSingleDotGrp.append('circle')
+        .attr('r', (d)=>jobSizeScale(d.rate))
+        .style('fill', circleColor)
+        .attr('opacity',1)
+        .on('mouseover',(data)->
+#            console.log data, @
+            d3.select(@).attr('opacity',1)
+            .transition().duration(200)
+            .attr('transform','scale(1.5, 1.5)')
+
+            drawEduPath(data.id)
+
+        ).on('mouseout',(data)->
+#            console.log data, @
+            d3.select(@).attr('opacity',1)
+            .transition().duration(200)
+            .attr('transform','scale(1, 1)')
+
+            removeEduPath()
+        ).on('dblclick',(data)->
+            console.log 'dblclick'
+            expand()
+        )
+
+        newSingleDotGrp.append('text')
+        .text((d)=>d.name)
+        .attr('y',35)
+        .style('text-anchor','middle')
+
+        #====================================
+
+    )
+
+
+
+</script>
+</body>
+</html>
